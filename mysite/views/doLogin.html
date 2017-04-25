@@ -1,0 +1,51 @@
+%testID = 999
+%returningUser = False
+%result = c.execute('SELECT id, username, password FROM users')
+%for record in result:
+  %for field in record:
+    %if field == username:
+      %returningUser = True
+      %testID = record[0]
+      %correctPW = record[2]
+    %end
+  %end
+%end
+
+<html lang = "en-us">
+    <head>
+        <title>Process form</title>
+        <meta charset = "utf-8">
+    </head>
+
+    <body>
+        %if returningUser == False:
+          %c.execute('INSERT INTO users VALUES (null, ?, ?, ?, ?, ?)',
+                   %(username, password, '0', '0', '0'))
+          %db.commit()
+          <h1>Success!</h1>
+          <div>
+             Click below to begin your adventure, {{ username }}!
+          </div>
+
+          <button type = "button"
+                  onclick = "document.location.href = '/intro/{{username}}'">
+                  Continue
+          </button>
+        %else:
+          %if password == correctPW:
+            <h1>Welcome back!</h1>
+            <div>
+               Click below to continue your adventure, {{ username }}!
+            </div>
+
+            <button type = "button"
+                    onclick = "document.location.href = '/intro/{{username}}'">
+                    Continue
+            </button>
+          %else:
+            <h2>WRONG PASSWORD</h2>
+          %end
+        %end
+
+    </body>
+</html>

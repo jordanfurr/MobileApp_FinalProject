@@ -1,0 +1,40 @@
+<%
+""" connect to database and query all users """
+result = c.execute("SELECT * FROM users")
+%>
+
+<!DOCTYPE html>
+<html lang = "en-us">
+<head>
+    <title>Show Users</title>
+    <meta charset = "utf-8">
+</head>
+<body>
+    <h1>Show users</h1>
+    <table border = "1">
+        <tr>
+            <th>ID</th>
+            <th>username</th>
+            <th>password</th>
+            <th>itemA</th>
+            <th>itemB</th>
+            <th>itemC</th>
+        </tr>
+        %for record in result:
+        <tr>
+            <td>{{ record[0] }}</td>
+            <td>{{ record[1] }}</td>
+            <td>{{ record[2] }}</td>
+            <td>{{ record[3] }}</td>
+            <td>{{ record[4] }}</td>
+            <td>{{ record[5] }}</td>
+        </tr>
+        %end
+    </table>
+
+    <button type = "button"
+            onclick = "document.location.href = '/login'">
+        return to login
+    </button>
+</body>
+</html>
