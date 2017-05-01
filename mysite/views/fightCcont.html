@@ -1,0 +1,50 @@
+<%
+#set user's curLevel to 6
+#remove the hourglass
+c.execute("UPDATE users SET curLevel='6', itemA='None' WHERE id=?",(userID))
+db.commit()
+
+sqlGetString = "SELECT itemC FROM users WHERE id = '{}'".format(userID)
+result = c.execute(sqlGetString)
+
+for record in result:
+    userItemC = record[0]
+end
+%>
+
+<!DOCTYPE html>
+<html lang = "en-us">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Boss Fight!</title>
+	<link rel="stylesheet" href="/static/NotLightSoulsTheme.min.css" />
+	<link rel="stylesheet" href="/static/jquery.mobile.icons.min.css" />
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css" />
+	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+</head>
+<body>
+    <p>
+        The hourglass shatters against the monster's jaw. Sand makes it into his giant eye and you hear a loud, unpleasant grunt from the monster.
+        <br></br>
+        It stumbles toward you and trips on stairs leading up to where you stand. With a loud crash, it falls to the ground, nearly clipping you on its way down.
+    </p>
+    %if userItemC == "Steel shield":
+        <button type = "button"
+            onclick = "document.location.href = '/fightCresult/{{userID}}/A'">
+            Shove the shield into the monster's nape
+        </button>
+    %elif userItemC == "Mysterious glowing orb":
+        <button type = "button"
+            onclick = "document.location.href = '/fightCresult/{{userID}}/B'">
+            Throw the mysterious glowing orb at the monster
+        </button>
+    %end
+
+    <button type = "button"
+        onclick = "document.location.href = '/fightCresult/{{userID}}/C'">
+        Panic and run away
+    </button>
+</body>
+</html>

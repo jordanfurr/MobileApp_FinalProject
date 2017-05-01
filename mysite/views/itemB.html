@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>A Fork in the Road</title>
+	<link rel="stylesheet" href="/static/NotLightSoulsTheme.min.css" />
+	<link rel="stylesheet" href="/static/jquery.mobile.icons.min.css" />
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css" />
+	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+</head>
+<body>
+  <p>
+  Again you find two more items that may be of use in your fight against the monsters.
+  <br></br>
+  Unforunately, they are so large that you can only carry one. Which do you choose?
+  </p>
+
+  <button type = "button"
+          onclick ="document.location.href = '/showInv/{{userID}}/B/1'">
+          Giant's femur
+  </button>
+
+  <button type = "button"
+          onclick ="document.location.href = '/showInv/{{userID}}/B/2'">
+          Ancient breastplate
+  </button>
+
+</body>
+</html>

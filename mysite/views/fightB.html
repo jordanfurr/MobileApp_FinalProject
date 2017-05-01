@@ -1,0 +1,48 @@
+<%
+sqlGetString = "SELECT itemA FROM users WHERE id = '{}'".format(userID)
+result = c.execute(sqlGetString)
+
+for record in result:
+    userItemA = record[0]
+end
+%>
+<!DOCTYPE html>
+<html lang = "en-us">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Monster Fight!</title>
+	<link rel="stylesheet" href="/static/NotLightSoulsTheme.min.css" />
+	<link rel="stylesheet" href="/static/jquery.mobile.icons.min.css" />
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css" />
+	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+</head>
+<body>
+    <p>
+        You're closing on the castle now, and it's hard to notice anything but the crescendo of maniacal laughter and the people's screams.
+    <br></br>
+    Your path has been blocked once again by a monster... this one being very different from the last. It appears amoebic in form, having no distinct appendages.
+    <br></br>
+    Its movement is very slow, but it is huge, and appears to grow as it engulfs the panicking rats and squirrels. Similar to the fog, it seems to almost instantly
+    destroy all that it touches.
+    </p>
+
+    %if userItemA == "Bag of precious stones":
+        <button type = "button"
+            onclick = "document.location.href = '/fightBresult/{{userID}}/A'">
+            Offer the monster the bag of precious stones
+        </button>
+    %elif userItemA == "Sand-filled hourglass":
+        <button type = "button"
+            onclick = "document.location.href = '/fightBresult/{{userID}}/B'">
+            Throw the sand-filled hourglass at the monster
+        </button>
+    %end
+
+    <button type = "button"
+        onclick = "document.location.href = '/fightBresult/{{userID}}/C'">
+        Run past the monster
+    </button>
+</body>
+</html>

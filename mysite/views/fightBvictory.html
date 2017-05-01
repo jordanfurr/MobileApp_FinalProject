@@ -1,0 +1,34 @@
+<%
+#set user's curLevel to 4
+#remove the giant's femur
+c.execute("UPDATE users SET curLevel='4', itemB='None' WHERE id=?",(userID))
+
+db.commit()
+%>
+
+<!DOCTYPE html>
+<html lang = "en-us">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Success</title>
+	<link rel="stylesheet" href="/static/NotLightSoulsTheme.min.css" />
+	<link rel="stylesheet" href="/static/jquery.mobile.icons.min.css" />
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css" />
+	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+</head>
+<body>
+    <p>
+        Deciding to take advantage of the monster's slow speed, you begin to sprint past it.
+    <br></br>
+        It grows in size terrifyingly quickly, and clips part of your cloak as you jump past and continue on.
+        You only have half of a cloak now... but you're alive.
+    </p>
+
+    <button type = "button"
+        onclick = "document.location.href = '/intro/4/{{userID}}'">
+        Onward!
+    </button>
+</body>
+</html>

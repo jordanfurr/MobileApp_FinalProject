@@ -1,0 +1,70 @@
+<%
+#increment user's death count
+result = c.execute("SELECT deathCount FROM users WHERE id=?",(userID))
+for record in result:
+    curDeathCount = record[0]
+end
+curDeathCount += 1
+c.execute("UPDATE users SET deathCount=? WHERE id=?",(curDeathCount, userID))
+
+#remove all of user's items
+c.execute("UPDATE users SET itemA='None', itemB='None', itemC='None' WHERE id=?",(userID))
+
+#set user's curLevel to 0
+c.execute("UPDATE users SET curLevel='0' WHERE id=?",(userID))
+
+db.commit()
+%>
+
+<!DOCTYPE html>
+<html lang = "en-us">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Login/Create User</title>
+	<link rel="stylesheet" href="/static/NotLightSoulsTheme.min.css" />
+	<link rel="stylesheet" href="/static/jquery.mobile.icons.min.css" />
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css" />
+	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+</head>
+<body>
+    <div data-role="header" data-position="inline">
+    <p>You died!</p>
+    </div>
+
+    %if choice == "A":
+        <p>
+        The monster seems to pay no attention to your outstretched hand, nor to the valuable stones which you've offered.
+        <br></br>
+        It latches on to your arm and rips it out of its socket. After hurling the severed limb away, the monster severs your head from your body.
+        </p>
+    %elif choice == "B":
+        <p>
+        The monster easily dodges the incoming hourglass.
+        <br></br>
+        Before you have time to consider what to do next, the monster has sunk its claws in between your ribs and into your heart.
+        </p>
+    %elif choice == "D":
+        <p>
+        The monster doesn't even seem to notice the breastplate, in fact its focus only seems to grow as its speed increases.
+        <br></br>
+        In one swift motion, the monster swipes at your neck, leaving your head attached to your body only by a few bloody ligaments.
+        </p>
+    %elif choice == "E":
+        <p>
+        Just before the monster reaches you, you dive off to the side and barely escape its reach. You swiftly rise to your feet and begin to sprint...
+        <br></br>
+        You hear a guttural chuckle from the monster just before it launches for you and digs its claws into the sides of your neck. With a single motion, the monster rips your spine from your back.
+        </p>
+    %end
+    <div>
+    <h3>Your total deaths: {{ curDeathCount }}</h3>
+    </div>
+
+    <button type = "button"
+        onclick = "document.location.href = '/intro/0/{{userID}}'">
+        Keep trying!
+    </button>
+</body>
+</html>

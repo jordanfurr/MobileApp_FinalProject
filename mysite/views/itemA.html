@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>A Fork in the Road</title>
+	<link rel="stylesheet" href="/static/NotLightSoulsTheme.min.css" />
+	<link rel="stylesheet" href="/static/jquery.mobile.icons.min.css" />
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css" />
+	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+</head>
+<body>
+  <p>
+  As you sprint through the market, the monsters' vast power becomes painfully clear.
+  Every place you see has been visited by destruction.
+  <br><br>
+  Coming to a fork in the road, you see a relatively intact item on each of the possible paths.
+  With the darkness following, you will not have time to grab both. Which path do you choose?
+  </p>
+
+  <button type = "button"
+          onclick ="document.location.href = '/showInv/{{userID}}/A/1'">
+          Bag of precious stones
+  </button>
+
+  <button type = "button"
+          onclick ="document.location.href = '/showInv/{{userID}}/A/2'">
+          Sand-filled hourglass
+  </button>
+
+</body>
+</html>

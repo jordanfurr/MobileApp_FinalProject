@@ -1,0 +1,71 @@
+<%
+#increment user's death count
+result = c.execute("SELECT deathCount FROM users WHERE id=?",(userID))
+for record in result:
+    curDeathCount = record[0]
+end
+curDeathCount += 1
+c.execute("UPDATE users SET deathCount=? WHERE id=?",(curDeathCount, userID))
+
+#remove all of user's items
+c.execute("UPDATE users SET itemA='None', itemB='None', itemC='None' WHERE id=?",(userID))
+
+#set user's curLevel to 0
+c.execute("UPDATE users SET curLevel='0' WHERE id=?",(userID))
+
+db.commit()
+%>
+
+<!DOCTYPE html>
+<html lang = "en-us">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Login/Create User</title>
+	<link rel="stylesheet" href="/static/NotLightSoulsTheme.min.css" />
+	<link rel="stylesheet" href="/static/jquery.mobile.icons.min.css" />
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css" />
+	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+</head>
+<body>
+    <div data-role="header" data-position="inline">
+    <h3>You died!</h3>
+    </div>
+
+    %if choice == "A":
+        <p>
+        The monster seems to pay no attention to your outstretched hand, nor to the valuable stones which you've offered.
+        <br></br>
+        With a loud crunch, it grabs you in one hand, crushing your internal organs. It then takes its first bite of its newfound meal: your head.
+        </p>
+    %elif choice == "C":
+        <p>
+        The monster swats you into the wall like a fly.
+        <br></br>
+        With an additional punch, he smashes you down to a thickness of about an inch.
+        </p>
+    %elif choice == "D":
+        <p>
+        The mysterious orb shatters into a million pieces. The same black fog you've been running from escapes from the orb and fills the room.
+        <br></br>
+        Darkness is the last thing you remember before your soft tissue is reduced to a liquid.
+        </p>
+    %elif choice == "E":
+        <p>
+        The boss lets out a hearty laugh and easily catches up to you.
+        <br></br>
+        He grabs your legs with one hand as he tears you in half with his teeth.
+        </p>
+    %end
+
+    <div>
+    <h3>Your total deaths: {{ curDeathCount }}</h3>
+    </div>
+
+    <button type = "button"
+        onclick = "document.location.href = '/intro/0/{{userID}}'">
+        Keep trying!
+    </button>
+</body>
+</html>

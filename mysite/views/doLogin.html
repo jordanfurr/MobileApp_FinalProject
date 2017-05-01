@@ -1,34 +1,85 @@
-%testID = 999
 %returningUser = False
-%result = c.execute('SELECT id, username, password FROM users')
+%currentLevel = 0
+%isAdmin = False
+
+%if len(username) > 20:
+    %username = username[0:20]
+%end
+%if len(password) > 20:
+    %password = password[0:20]
+%end
+
+%result = c.execute('SELECT id, uName, pWord, curLevel FROM users')
 %for record in result:
   %for field in record:
     %if field == username:
       %returningUser = True
-      %testID = record[0]
+      %userID = record[0]
       %correctPW = record[2]
+      %currentLevel = record[3]
+      %break
     %end
   %end
 %end
 
 <html lang = "en-us">
     <head>
-        <title>Process form</title>
-        <meta charset = "utf-8">
+    	<meta charset="utf-8">
+    	<meta name="viewport" content="width=device-width, initial-scale=1">
+    	<title>Login/Create User</title>
+    	<link rel="stylesheet" href="static/NotLightSoulsTheme.min.css" />
+    	<link rel="stylesheet" href="static/jquery.mobile.icons.min.css" />
+    	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css" />
+    	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+	    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
     </head>
 
     <body>
+        %if username == 'admin':
+            %isAdmin = True
+
+            %if password == 'admin':
+                <h3>Welcome, admin!</h3>
+                <button type = "button"
+                    onclick = "document.location.href = '/resetDB'">
+                    Reset the database and logout
+                </button>
+
+                <button type = "button"
+                    onclick = "document.location.href = '/showDB'">
+                    View the full database
+                </button>
+            %else:
+                <p>It looks like you're trying to login as an admin,
+                but the password isn't correct.
+                </p>
+                <button type = "button"
+                    onclick = "document.location.href = '/login'">
+                    Re-try login
+                </button>
+            %end
+        %else: #else if not logging in as an admin
         %if returningUser == False:
-          %c.execute('INSERT INTO users VALUES (null, ?, ?, ?, ?, ?)',
-                   %(username, password, '0', '0', '0'))
+          %c.execute('INSERT INTO users VALUES (null, ?, ?, ?, ?, ?, ?, ?, ?)',
+                   %(username, password, '0', '0', 'None', 'None', 'None', '0'))
           %db.commit()
+
+          %result = c.execute('SELECT id, uName FROM users')
+          %for record in result:
+            %for field in record:
+              %if field == username:
+                %userID = record[0]
+                %break
+              %end
+            %end
+          %end
           <h1>Success!</h1>
           <div>
              Click below to begin your adventure, {{ username }}!
           </div>
 
           <button type = "button"
-                  onclick = "document.location.href = '/intro/{{username}}'">
+                  onclick = "document.location.href = '/intro/{{currentLevel}}/{{userID}}'">
                   Continue
           </button>
         %else:
@@ -39,13 +90,17 @@
             </div>
 
             <button type = "button"
-                    onclick = "document.location.href = '/intro/{{username}}'">
+                    onclick = "document.location.href = '/intro/{{currentLevel}}/{{userID}}'">
                     Continue
             </button>
           %else:
-            <h2>WRONG PASSWORD</h2>
+            <h2>Incorrect password :(</h2>
+            <button type = "button"
+                    onclick = "document.location.href = '/login'">
+                    Re-try login
+            </button>
           %end
         %end
-
+        %end
     </body>
 </html>

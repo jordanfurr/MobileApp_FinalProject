@@ -1,0 +1,76 @@
+<%
+""" connect to database and query all users """
+result = c.execute("SELECT uName, deathCount FROM users WHERE victor='1'")
+
+ll = []
+for record in result:
+    for field in record:
+        ll.append(field)
+    end
+end
+
+if len(ll) > 2:
+    for i in range(0, len(ll), 2):
+        insertIndex = i+1
+
+        #ANDY PLEASE FORGIVE MY NEXT TWO LINES...
+        while insertIndex > 0 and (insertIndex+2) < len(ll) and ll[insertIndex+2] < ll[insertIndex]: #while the value to the right is bigger than the current value,
+            ll[insertIndex], ll[insertIndex-1], ll[insertIndex+2], ll[insertIndex+1] = ll[insertIndex+2], ll[insertIndex+1], ll[insertIndex], ll[insertIndex-1] #swap them!
+            insertIndex -= 2 #go back a spot in the list
+        end
+    end
+end
+%>
+
+<!DOCTYPE html>
+<html lang = "en-us">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Victors</title>
+	<link rel="stylesheet" href="/static/NotLightSoulsTheme.min.css" />
+	<link rel="stylesheet" href="/static/jquery.mobile.icons.min.css" />
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css" />
+	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+</head>
+<body>
+    <div data-role="header" data-position="inline">
+    <h1>Victors</h1>
+    </div>
+
+    <table data-role="table" class="ui-responsive" border = "1">
+        <thead>
+        <tr>
+            <th>Rank</th>
+            <th>Username</th>
+            <th>Death count</th>
+        </tr>
+        </thead>
+
+        %leaderIndex = 1
+        %for i in range(0, len(ll), 2):
+            <tbody>
+            <tr>
+                <td>{{ leaderIndex }}</td>
+                <td>{{ ll[i] }}</td>
+                <td>{{ ll[i+1] }}</td>
+            </tr>
+            </tbody>
+            %leaderIndex += 1
+        %end
+
+    </table>
+
+    <button type = "button"
+            onclick = "document.location.href = '/intro/7/{{userID}}'">
+            Reset and try for a better score
+    </button>
+
+    <button type = "button"
+            onclick = "document.location.href = '/login'">
+            Return to login
+    </button>
+</body>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<%
+sqlGetString = "SELECT itemA, itemB FROM users WHERE id = '{}'".format(userID)
+result = c.execute(sqlGetString)
+
+for record in result:
+    userItemA = record[0]
+    userItemB = record[1]
+end
+%>
+
+<!DOCTYPE html>
+<html lang = "en-us">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Monster fight!</title>
+	<link rel="stylesheet" href="/static/NotLightSoulsTheme.min.css" />
+	<link rel="stylesheet" href="/static/jquery.mobile.icons.min.css" />
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css" />
+	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+</head>
+<body>
+<div data-role="page" data-theme="a">
+    <p>
+        On your way toward the castle, you burst through a broken down door into a clearing with a well, only to find a monster waiting.
+    <br></br>
+    The creature is tall, very muscular, with extreme speed. It quickly notices you, reveals sharp, long claws, and begins to sprint directly for you.
+    </p>
+
+
+    %if userItemA == "Bag of precious stones":
+        <button type = "button"
+            onclick = "document.location.href = '/fightAresult/{{userID}}/A'">
+            Offer the monster the bag of precious stones
+        </button>
+    %elif userItemA == "Sand-filled hourglass":
+        <button type = "button"
+            onclick = "document.location.href = '/fightAresult/{{userID}}/B'">
+            Throw the sand-filled hourglass at the monster
+        </button>
+    %end
+    %if userItemB == "Giant's femur":
+        <button type = "button"
+            onclick = "document.location.href = '/fightAresult/{{userID}}/C'">
+            Attack the monster with the giant's femur
+        </button>
+    %elif userItemB == "Ancient breastplate":
+        <button type = "button"
+            onclick = "document.location.href = '/fightAresult/{{userID}}/D'">
+            Push out your chest and brace for impact with your breastplate
+        </button>
+    %end
+
+    <button type = "button"
+        onclick = "document.location.href = '/fightAresult/{{userID}}/E'">
+        Jump out of the way and run past the monster
+    </button>
+</div>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<%
+#set user's victor to 1, curLevel to 8
+c.execute("UPDATE users SET victor='1', curLevel='8' WHERE id=?",(userID))
+db.commit()
+%>
+
+<!DOCTYPE html>
+<html lang = "en-us">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Victory!</title>
+	<link rel="stylesheet" href="/static/NotLightSoulsTheme.min.css" />
+	<link rel="stylesheet" href="/static/jquery.mobile.icons.min.css" />
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css" />
+	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+</head>
+<body>
+    <p>
+        With the piercing of the monster's brain stem (or whatever is actually in there), it lets out a cry so loud it nearly bursts your eardrums.
+    <br></br>
+    All at once, the dark fog and the monsters inhabiting the city vanish into nothing. The town, at least what's left of it, is saved!
+    </p>
+
+
+
+    <button type = "button"
+            onclick = "document.location.href = '/showLB/{{userID}}'">
+            Show the leaderboard
+    </button>
+
+    <button type = "button"
+            onclick = "document.location.href = '/intro/7/{{userID}}'">
+            Reset and try for a better score
+    </button>
+
+    <button type = "button"
+            onclick = "document.location.href = '/login'">
+            Return to login
+    </button>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<%
+if item == 'A':
+    newLevel = 1
+    location = 'itemA'
+    if choice == '1':
+        strItem = 'Bag of precious stones'
+    #end
+    elif choice == '2':
+        strItem = 'Sand-filled hourglass'
+    end
+#end
+elif item == 'B':
+    newLevel = 2
+    location = 'itemB'
+    if choice == '1':
+        strItem = "Giant's femur"
+    #end
+    elif choice == '2':
+        strItem = 'Ancient breastplate'
+    end
+#end
+elif item == 'C':
+    newLevel = 5
+    location = 'itemC'
+    if choice == '1':
+        strItem = 'Steel shield'
+    #end
+    elif choice == '2':
+        strItem = 'Mysterious glowing orb'
+    end
+end
+
+updateString = "UPDATE users SET {} = ? WHERE id = ?".format(location)
+c.execute(updateString,(strItem, userID))
+c.execute("UPDATE users SET curLevel = ? WHERE id = ?",(newLevel, userID))
+db.commit()
+
+sqlString = "SELECT uName, itemA, itemB, itemC FROM users WHERE id='{}'".format(userID)
+result = c.execute(sqlString)
+%>
+<!DOCTYPE html>
+<html lang = "en-us">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Inventory</title>
+	<link rel="stylesheet" href="/static/NotLightSoulsTheme.min.css" />
+	<link rel="stylesheet" href="/static/jquery.mobile.icons.min.css" />
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css" />
+	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+</head>
+<body>
+    <div data-role="header" data-position="inline">
+    <h3>Your inventory:</h3>
+    </div>
+
+    <table data-role="table" class="ui-responsive" border="1">
+        <thead>
+        <tr>
+            <th>username</th>
+            <th>itemA</th>
+            <th>itemB</th>
+            <th>itemC</th>
+        </tr>
+        </thead>
+        %for record in result:
+        <tbody>
+        <tr>
+            <td>{{ record[0] }}</td>
+            <td>{{ record[1] }}</td>
+            <td>{{ record[2] }}</td>
+            <td>{{ record[3] }}</td>
+        </tr>
+        </tbody>
+        %end
+    </table>
+
+    <button type = "button"
+            onclick = "document.location.href = '/moveOn/{{userID}}/{{location}}'">
+            Continue your adventure
+    </button>
+</body>
+</html>

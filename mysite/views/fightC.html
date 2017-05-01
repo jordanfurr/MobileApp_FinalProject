@@ -1,0 +1,59 @@
+<%
+sqlGetString = "SELECT itemA, itemC FROM users WHERE id = '{}'".format(userID)
+result = c.execute(sqlGetString)
+
+for record in result:
+    userItemA = record[0]
+    userItemC = record[1]
+end
+%>
+<!DOCTYPE html>
+<html lang = "en-us">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Boss Fight!</title>
+	<link rel="stylesheet" href="/static/NotLightSoulsTheme.min.css" />
+	<link rel="stylesheet" href="/static/jquery.mobile.icons.min.css" />
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css" />
+	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+</head>
+<body>
+    <p>Inside the throne room, you finally find the source of the laughter. There stands a 20 foot tall cyclops, easily weighing a ton at the least.
+    <br></br>
+    He slowly turns and lets out a loud laugh as his gaze meets yours. To the monster, this fight will seemingly be the easiest it's ever experienced.
+    <br></br>
+    Once the laughter dies, the monster starts to run in your direction.
+    </p>
+
+    %if userItemA == "Bag of precious stones":
+        <button type = "button"
+            onclick = "document.location.href = '/fightCnext/{{userID}}/A'">
+            Offer the monster the bag of precious stones
+        </button>
+    %elif userItemA == "Sand-filled hourglass":
+        <button type = "button"
+            onclick = "document.location.href = '/fightCnext/{{userID}}/B'">
+            Throw the sand-filled hourglass at the monster
+        </button>
+    %end
+
+    %if userItemC == "Steel shield":
+        <button type = "button"
+            onclick = "document.location.href = '/fightCnext/{{userID}}/C'">
+            Take a defensive stance using your steel shield
+        </button>
+    %elif userItemC == "Mysterious glowing orb":
+        <button type = "button"
+            onclick = "document.location.href = '/fightCnext/{{userID}}/D'">
+            Throw the mysterious glowing orb at the monster
+        </button>
+    %end
+
+    <button type = "button"
+        onclick = "document.location.href = '/fightCnext/{{userID}}/E'">
+        Panic and run away
+    </button>
+</body>
+</html>
